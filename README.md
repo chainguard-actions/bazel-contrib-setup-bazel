@@ -1,6 +1,14 @@
 # bazel-contrib/setup-bazel
 
-Hardened GitHub Action by [Chainguard](https://www.chainguard.dev).
+GitHub Action to configure Bazel
+
+Hardened by [Chainguard](https://www.chainguard.dev) from the upstream action at [https://github.com/bazel-contrib/setup-bazel](https://github.com/bazel-contrib/setup-bazel).
+
+## Versions
+
+| Version | Tag | Upstream commit |
+|---------|-----|-----------------|
+| 0.19.0 | [`0.19.0`](https://github.com/chainguard-actions/bazel-contrib-setup-bazel/tree/0.19.0) | — |
 
 ## Privacy
 
