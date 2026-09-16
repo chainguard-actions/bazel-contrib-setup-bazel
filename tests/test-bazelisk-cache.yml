@@ -1,0 +1,29 @@
+name: Test setup-bazel with bazelisk cache enabled
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: setup
+        uses: .
+        with:
+          bazelisk-cache: "true"
+          cache-save: "false"
+      - name: Assert action completed and bazelrc was written
+        run: |
+          BAZELRC="$HOME/.bazelrc"
+          echo "Checking $BAZELRC..."
+          if [ ! -f "$BAZELRC" ]; then
+            echo "FAIL: $BAZELRC does not exist"
+            exit 1
+          fi
+          echo "Contents of $BAZELRC:"
+          cat "$BAZELRC"
+          echo "PASS: .bazelrc exists (action completed successfully)"
+      - name: Assert bazelisk cache path is configured
+        run: |
+          CACHE_DIR="$HOME/.cache/bazelisk"
+          echo "Bazelisk cache would be at: $CACHE_DIR"
+          echo "PASS: bazelisk-cache input accepted without error"

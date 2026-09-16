@@ -1,4 +1,11 @@
 {
-  "upstream": "bazel-contrib/setup-bazel",
-  "version": "0.19.0"
+  "owner": "bazel-contrib",
+  "repo": "setup-bazel",
+  "version": "0.19.0",
+  "commit_sha": "c5acdfb288317d0b5c0bbd7a396a3dc868bb0f86",
+  "url": "https://github.com/bazel-contrib/setup-bazel",
+  "policy_sha": "d636be7e43ef829af6e853da6b3c7566db9f72fe",
+  "test_policy_sha": "843adf9e4b8f85d0c08b27b9d0b09dd094b54702",
+  "test_agent_version": "2",
+  "harden_agent_version": "2"
 }

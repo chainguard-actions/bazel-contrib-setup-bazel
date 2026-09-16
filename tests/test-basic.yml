@@ -1,0 +1,34 @@
+name: Test basic setup-bazel usage
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: setup
+        uses: .
+        with:
+          bazelisk-version: 1.19.0
+      - name: Assert bazel is available on PATH
+        run: |
+          echo "Checking for bazel/bazelisk..."
+          if command -v bazel >/dev/null 2>&1; then
+            echo "PASS: bazel found at $(command -v bazel)"
+          elif command -v bazelisk >/dev/null 2>&1; then
+            echo "PASS: bazelisk found at $(command -v bazelisk)"
+          else
+            echo "FAIL: neither bazel nor bazelisk found on PATH"
+            exit 1
+          fi
+      - name: Assert bazelrc was written
+        run: |
+          BAZELRC="$HOME/.bazelrc"
+          echo "Checking $BAZELRC..."
+          if [ ! -f "$BAZELRC" ]; then
+            echo "FAIL: $BAZELRC does not exist"
+            exit 1
+          fi
+          echo "Contents of $BAZELRC:"
+          cat "$BAZELRC"
+          echo "PASS: .bazelrc exists"

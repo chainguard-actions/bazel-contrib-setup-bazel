@@ -1,0 +1,29 @@
+name: Test setup-bazel with repository cache enabled
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: setup
+        uses: .
+        with:
+          repository-cache: "true"
+          cache-version: "1"
+          cache-save: "false"
+      - name: Assert repository cache is configured in bazelrc
+        run: |
+          BAZELRC="$HOME/.bazelrc"
+          echo "Checking $BAZELRC for repository cache configuration..."
+          if [ ! -f "$BAZELRC" ]; then
+            echo "FAIL: $BAZELRC does not exist"
+            exit 1
+          fi
+          echo "Contents of $BAZELRC:"
+          cat "$BAZELRC"
+          if ! grep -q "repository_cache" "$BAZELRC"; then
+            echo "FAIL: expected '--repository_cache' not found in $BAZELRC"
+            exit 1
+          fi
+          echo "PASS: repository cache configuration found in .bazelrc"

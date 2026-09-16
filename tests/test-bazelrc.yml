@@ -1,0 +1,33 @@
+name: Test setup-bazel with bazelrc configuration
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: setup
+        uses: .
+        with:
+          bazelrc: |
+            build --jobs=2
+            build --verbose_failures
+      - name: Assert bazelrc content was written
+        run: |
+          BAZELRC="$HOME/.bazelrc"
+          echo "Checking $BAZELRC..."
+          if [ ! -f "$BAZELRC" ]; then
+            echo "FAIL: $BAZELRC does not exist"
+            exit 1
+          fi
+          echo "Contents of $BAZELRC:"
+          cat "$BAZELRC"
+          if ! grep -q "verbose_failures" "$BAZELRC"; then
+            echo "FAIL: expected 'verbose_failures' not found in $BAZELRC"
+            exit 1
+          fi
+          if ! grep -q "jobs=2" "$BAZELRC"; then
+            echo "FAIL: expected 'jobs=2' not found in $BAZELRC"
+            exit 1
+          fi
+          echo "PASS: bazelrc content found"
