@@ -1,0 +1,22 @@
+name: Test setup-bazel with repository-cache enabled
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: setup
+        uses: .
+        with:
+          bazelisk-version: 1.x
+          repository-cache: "true"
+          cache-version: "2"
+      - name: Assert bazelisk is available after repository-cache setup
+        run: |
+          echo "Checking bazelisk/bazel availability with repository-cache=true..."
+          if ! command -v bazel &>/dev/null && ! command -v bazelisk &>/dev/null; then
+            echo "FAIL: neither bazel nor bazelisk found on PATH"
+            exit 1
+          fi
+          echo "PASS: bazel/bazelisk is available with repository-cache enabled"

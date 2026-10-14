@@ -1,0 +1,30 @@
+name: Test setup-bazel with custom bazelrc
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: setup
+        uses: .
+        with:
+          bazelisk-version: 1.x
+          bazelrc: |
+            build --jobs=2
+            build --verbose_failures
+      - name: Assert bazelrc content was written
+        run: |
+          echo "Checking user .bazelrc for custom content..."
+          BAZELRC="$HOME/.bazelrc"
+          if [ ! -f "$BAZELRC" ]; then
+            echo "FAIL: user .bazelrc not found at $BAZELRC"
+            exit 1
+          fi
+          echo "Contents of $BAZELRC:"
+          cat "$BAZELRC"
+          if ! grep -q "verbose_failures" "$BAZELRC"; then
+            echo "FAIL: expected 'verbose_failures' in user .bazelrc"
+            exit 1
+          fi
+          echo "PASS: custom bazelrc content found"
