@@ -6,10 +6,10 @@ Hardened by [Chainguard](https://www.chainguard.dev) from the upstream action at
 
 ## Versions
 
-| Version | Tag | Upstream commit |
-|---------|-----|-----------------|
-| 0.19.0 | [`0.19.0`](https://github.com/chainguard-actions/bazel-contrib-setup-bazel/tree/0.19.0) | [`c5acdfb`](https://github.com/bazel-contrib/setup-bazel/commit/c5acdfb288317d0b5c0bbd7a396a3dc868bb0f86) |
-| 0.19.1 | [`0.19.1`](https://github.com/chainguard-actions/bazel-contrib-setup-bazel/tree/0.19.1) | [`104e3ee`](https://github.com/bazel-contrib/setup-bazel/commit/104e3eea9447cdaa4b00d0fb46191a3985d26ab3) |
+| Version | Tag | Upstream commit | Hardening report |
+|---------|-----|-----------------|------------------|
+| 0.19.0 | [`0.19.0`](https://github.com/chainguard-actions/bazel-contrib-setup-bazel/tree/0.19.0) | [`c5acdfb`](https://github.com/bazel-contrib/setup-bazel/commit/c5acdfb288317d0b5c0bbd7a396a3dc868bb0f86) | [`HARDENING.md`](https://github.com/chainguard-actions/bazel-contrib-setup-bazel/blob/0.19.0/HARDENING.md) |
+| 0.19.1 | [`0.19.1`](https://github.com/chainguard-actions/bazel-contrib-setup-bazel/tree/0.19.1) | [`104e3ee`](https://github.com/bazel-contrib/setup-bazel/commit/104e3eea9447cdaa4b00d0fb46191a3985d26ab3) | [`HARDENING.md`](https://github.com/chainguard-actions/bazel-contrib-setup-bazel/blob/0.19.1/HARDENING.md) |
 
 ## Privacy
 
