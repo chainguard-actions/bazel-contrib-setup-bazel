@@ -1,0 +1,33 @@
+name: Test custom bazelrc and output-base
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+        with:
+          output-base: /tmp/custom-bazel-output
+          cache-save: "false"
+          bazelrc: |
+            build --color=yes
+            build --show_timestamps
+      - name: Assert ~/.bazelrc content
+        run: |
+          echo "--- $HOME/.bazelrc ---"
+          cat "$HOME/.bazelrc"
+          echo "---"
+          for line in "startup --output_base=/tmp/custom-bazel-output" "build --color=yes" "build --show_timestamps"; do
+            if ! grep -qxF "$line" "$HOME/.bazelrc"; then
+              echo "FAIL: missing line '$line'"
+              exit 1
+            fi
+          done
+          FIRST="$(head -n1 "$HOME/.bazelrc")"
+          if [ "$FIRST" != "startup --output_base=/tmp/custom-bazel-output" ]; then
+            echo "FAIL: first line should be startup option, got '$FIRST'"
+            exit 1
+          fi
+          echo "PASS"

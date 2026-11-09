@@ -1,0 +1,31 @@
+name: Test basic usage
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+      - name: Assert ~/.bazelrc has default output_base
+        run: |
+          echo "--- $HOME/.bazelrc ---"
+          cat "$HOME/.bazelrc" || { echo "FAIL: ~/.bazelrc missing"; exit 1; }
+          echo "---"
+          if ! grep -qxF "startup --output_base=$HOME/.bazel" "$HOME/.bazelrc"; then
+            echo "FAIL: expected 'startup --output_base=$HOME/.bazel'"
+            exit 1
+          fi
+          if grep -q -- "--disk_cache" "$HOME/.bazelrc" || grep -q -- "--repository_cache" "$HOME/.bazelrc"; then
+            echo "FAIL: caches should be disabled by default"
+            exit 1
+          fi
+          echo "PASS"
+      - name: Assert BAZELISK_GITHUB_TOKEN exported
+        run: |
+          if [ -z "$BAZELISK_GITHUB_TOKEN" ]; then
+            echo "FAIL: BAZELISK_GITHUB_TOKEN not exported"
+            exit 1
+          fi
+          echo "PASS"
