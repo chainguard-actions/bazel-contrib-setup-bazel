@@ -4,8 +4,13 @@
   "version": "0.19.2",
   "commit_sha": "f34d6a05eae3c24acab7fa54587492daeaeffdab",
   "url": "https://github.com/bazel-contrib/setup-bazel",
-  "policy_sha": "d636be7e43ef829af6e853da6b3c7566db9f72fe",
+  "policy_sha": "374911c4be584df24e6da57af2d990570ef0f859",
   "test_policy_sha": "843adf9e4b8f85d0c08b27b9d0b09dd094b54702",
   "test_agent_version": "2",
-  "harden_agent_version": "2"
+  "harden_agent_version": "2",
+  "dist_artifact": {
+    "gcs_uri": "gs://patch-actions-node-artifacts/dist-artifacts/bazel-contrib/setup-bazel/0.19.2/sha256-3a0e69e9e7b381a86f3fae2476bc3b940a6b6cd36497aec7f9ed6bba31b17033.tar.gz",
+    "sha256": "3a0e69e9e7b381a86f3fae2476bc3b940a6b6cd36497aec7f9ed6bba31b17033",
+    "size_bytes": 3054567
+  }
 }
